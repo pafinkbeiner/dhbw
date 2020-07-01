@@ -1,0 +1,49 @@
+﻿<Window x:Class="Aufgabe_11.Views.WindowAdd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Aufgabe_11.Views"
+        mc:Ignorable="d"
+        Title="Hinzufügen" Height="450" Width="550">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Vorname:" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label Content="Nachname:" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label Content="Geschlecht:" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label Content="Straße:" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label Content="Hausnummer:" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label Content="Postleitzahl:" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+        <Label Content="Ort:" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="10" Text="{Binding Firstname}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding Lastname}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="10" Text="{Binding Street}"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Margin="10" Text="{Binding StreetNumber}"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="1" Margin="10" Text="{Binding PostCode}"></TextBox>
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="10" Text="{Binding City}"></TextBox>
+
+        <ComboBox Grid.Row="2" Grid.Column="1" Margin="10" ItemsSource="{Binding Genders}" SelectedItem="{Binding Gender}"></ComboBox>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.ColumnSpan="2">
+            <Button Margin="22,15,0,15" Width="100" Content="Ok" Command="{Binding OkCommand}"/>
+            <Button Margin="22,15,0,15" Width="100" Content="Abbrechen" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

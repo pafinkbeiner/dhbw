@@ -1,0 +1,16 @@
+﻿<Window x:Class="Client.View.AddBusinessAreaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.View"
+        mc:Ignorable="d"
+        Title="AddBusinessAreaWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="Name" Margin="206,118,495,264"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding BusinessUnit.Name}" Margin="309,118,198,264"></TextBox>
+        <Label Content="Beschreibung" Margin="206,160,493,226"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding BusinessUnit.Description}" Margin="309,160,198,220"></TextBox>
+        <Button Content="Hinzufügen" Margin="327,237,275,141" Command="{Binding AddCommand}"></Button>
+    </Grid>
+</Window>

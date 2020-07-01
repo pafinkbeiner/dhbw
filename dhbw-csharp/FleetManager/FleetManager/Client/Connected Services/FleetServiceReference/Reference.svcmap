@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="11dc94eb-94b6-49a0-a010-d5de48b82521" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/ServerFleetManager/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="FleetService.wsdl" MetadataType="Wsdl" ID="81efbf78-f592-41bb-ac53-205e9932acc7" SourceId="1" SourceUrl="http://localhost:8733/ServerFleetManager/?wsdl" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="e9235af6-0658-45fd-b4ae-54878980a995" SourceId="1" SourceUrl="http://localhost:8733/ServerFleetManager/?xsd=xsd2" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="19be8294-de65-487f-8b53-322f16632376" SourceId="1" SourceUrl="http://localhost:8733/ServerFleetManager/?disco" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="25e81f2c-a3aa-4024-8d69-7cae05a102ff" SourceId="1" SourceUrl="http://localhost:8733/ServerFleetManager/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="97a0e443-7db3-412d-92c9-01cebbdab6b7" SourceId="1" SourceUrl="http://localhost:8733/ServerFleetManager/?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,21 @@
+﻿<Window x:Class="Client.View.AddUserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.View"
+        mc:Ignorable="d"
+        Title="AddUserWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="Benutzername" Margin="193,63,508,319"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding Username}" Margin="296,63,211,319"></TextBox>
+        <Label Content="Vorname" Margin="193,105,506,281"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding User.Firstname}" Margin="296,105,211,275"></TextBox>
+        <Label Content="Nachname" Margin="193,148,504,230"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding User.Lastname}" Margin="296,149,211,230"></TextBox>
+ <!--       <Label Content="Password" Margin="193,194,524,189"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding User.Password}" Margin="296,194,211,187"></TextBox>-->
+        <CheckBox IsChecked="{Binding User.IsAdmin}" Content="Administrator" Margin="337,247,351,151"></CheckBox>
+        <Button Content="Hinzufügen" Margin="321,285,281,93" Command="{Binding AddCommand}"></Button>
+    </Grid>
+</Window>

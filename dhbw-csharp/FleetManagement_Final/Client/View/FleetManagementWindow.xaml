@@ -1,0 +1,69 @@
+﻿<Window x:Class="Client.View.FleetManagementView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:Client.View"
+        Title="FleetManager" Height="750" Width="1250" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <view:SubmoduleSelector x:Key="TemplateSelector" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Image Source="/Ressources/placeholder.png" Stretch="Uniform" Grid.Column="0" Grid.Row="0" Margin="0,10,10,21"></Image>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="10,65,10,15">
+            <Button Width="100px" Height="30px"  Content="Neu" Command="{Binding NewCommand}"/>
+            <Button Width="100px" Height="30px"  Content="Speichern" Margin="30,0,0,0" Command="{Binding SaveCommand}"/>
+            <Button Width="100px" Height="30px"  Content="Löschen" Margin="30,0,0,0" Command="{Binding DeleteCommand}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,10,0,0">
+            <Button Margin="0 0 0 3" Height="30px" Content="Home" Command="{Binding OpenHomeCommand}" />
+            <Button Margin="0 0 0 3" Height="30px" Content="Kosten/Monat" Command="{Binding OpenCostMonthCommand}" />
+            <Button Margin="0 0 0 3" Height="30px" Content="Kosten/Geschäftsbereich" Command="{Binding OpenCostBusinessAreaCommand}" />
+            <Button Margin="0 0 0 3" Height="30px" Content="Fahrzeuge" Command="{Binding OpenVehiclesCommand}" />
+            <Button Margin="0 0 0 3" Height="30px" Content="Mitarbeiter" Command="{Binding OpenEmployeesCommand}" />
+            <Button Margin="0 0 0 3" Height="30px" Content="Geschäftsbereiche" Command="{Binding OpenBusinessAreasCommand}" />
+            <Button Margin="0 0 0 3" Height="30px" Content="Administration" IsEnabled="False"/>
+            <Button Margin="0 0 0 0" Height="30px" Content="Benutzer" Command="{Binding OpenUserCommand}" />
+        </StackPanel>
+
+        <GridSplitter ShowsPreview="True" Width="1242" Margin="0,110,0,0" Grid.ColumnSpan="2"/>
+
+        <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding ActiveViewModel}" ContentTemplateSelector="{StaticResource TemplateSelector}" Margin="10">
+            <ContentControl.Resources>
+                <DataTemplate x:Key="homeViewTemplate">
+                    <view:HomeView />
+                </DataTemplate>
+                <DataTemplate x:Key="costMonthViewTemplate">
+                    <view:CostMonthView />
+                </DataTemplate>
+                <DataTemplate x:Key="costBusinessAreaViewTemplate">
+                    <view:CostBusinessAreaView/>
+                </DataTemplate>
+                <DataTemplate x:Key="vehiclesViewTemplate">
+                    <view:VehiclesView/>
+                </DataTemplate>
+                <DataTemplate x:Key="employeesViewTemplate">
+                    <view:EmployeesView/>
+                </DataTemplate>
+                <DataTemplate x:Key="businessAreasViewTemplate">
+                    <view:BusinessAreaView/>
+                </DataTemplate>
+                <DataTemplate x:Key="userViewTemplate">
+                    <view:UserView/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+        <Button Command="{Binding LogoutCommand}" Grid.Column="1" Margin="945,5,6,68">Logout</Button>
+    </Grid>
+</Window>

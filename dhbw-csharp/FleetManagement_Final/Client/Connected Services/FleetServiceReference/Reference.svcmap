@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4927077b-a9e6-4ce9-b2fa-6098612b8e50" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/Server/FleetService/ " Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="FleetService.wsdl" MetadataType="Wsdl" ID="647fe513-3401-40e4-811f-81b1f3818b83" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Server/FleetService/?wsdl" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="87119454-386d-4b03-a9c8-5774acb8d463" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Server/FleetService/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="1ebf41ed-266a-4de2-b05d-bab4e9d573de" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Server/FleetService/?xsd=xsd0" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="390922b2-faa6-4c02-99f9-e9d18e141275" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Server/FleetService/?xsd=xsd2" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="4f7078ca-045a-41d4-970a-77fe63860f1a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/Server/FleetService/?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,30 @@
+﻿<Window x:Class="Client.View.AddEmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.View"
+        mc:Ignorable="d"
+        Title="AddEmployeeWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="Personalnummer" Margin="175,33,493,349"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding Employee.EmployeeNumber}" Margin="327,33,180,349"></TextBox>
+        <Label Content="Anrede" Margin="175,75,522,315"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding Employee.Salutation}" Margin="327,75,180,305"></TextBox>
+        <Label Content="Titel" Margin="175,129,522,261"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding Employee.Title}" Margin="327,119,180,261"></TextBox>
+        <Label Content="Vorname" Margin="175,172,522,218"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding Employee.FirstName}" Margin="327,163,180,217"></TextBox>
+        <Label Content="Nachname" Margin="175,217,522,173"></Label>
+        <TextBox VerticalContentAlignment="Center" Text="{Binding Employee.LastName}" Margin="327,207,180,173"></TextBox>
+        <Label Content="Geschäftsbereich" Margin="162,263,493,116"></Label>
+        <ComboBox ItemsSource="{Binding BusinessUnits}" SelectedItem="{Binding Employee.BusinessUnitId}" Margin="327,251,180,128">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button Content="Hinzufügen" Margin="283,331,319,47" Command="{Binding AddCommand}"></Button>
+    </Grid>
+</Window>
