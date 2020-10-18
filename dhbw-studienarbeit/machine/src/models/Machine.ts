@@ -31,17 +31,21 @@ export interface Machine{
         locked: boolean;
         position: Position
     },
+    // Material Informationen
+    materialInfo :{
+        temp: Number,
+        material: string;
+    },
     // Funktionen
     powerOn: Function;
     resetToDefault: Function;
-    closeSafetyDoor: Function;
-    openSafetyDoor: Function;
     setMachineMode: (data: OperationMode) => any;
 }
 
 export enum OperationMode{
     automatic,
-    semiAutomatic
+    semiAutomatic,
+    stopped
 }
 
 export interface Position{
