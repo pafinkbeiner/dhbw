@@ -1,6 +1,6 @@
 export interface Machine{
     // Maschinen Details
-    mashineDetails: {
+    machineDetails: {
         model: string; 
         serialNumber: number;
         sparDistance: number;
@@ -36,6 +36,7 @@ export interface Machine{
     resetToDefault: Function;
     closeSafetyDoor: Function;
     openSafetyDoor: Function;
+    setMachineMode: (data: OperationMode) => any;
 }
 
 export enum OperationMode{

@@ -4,7 +4,6 @@ import express from "express";
 import path from "path";
 import indexRouter from "./routes/index"
 const createError = require("http-errors");
-const debug = require("debug")("ejs:server");
 
 // initialize configuration
 dotenv.config();
@@ -37,7 +36,7 @@ app.use(function(err: any, req: any, res: any, next: any) {
 
 	// render the error page
 	res.status(err.status || 500);
-	res.render("error");
+	res.json({error: err});
   });
 
 // start the express server
