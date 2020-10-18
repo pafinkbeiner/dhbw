@@ -1,4 +1,5 @@
 export interface Machine{
+    name: string;
     // Maschinen Details
     machineDetails: {
         model: string; 

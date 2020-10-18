@@ -1,8 +1,11 @@
+import { setInterval } from "timers";
+import { DatabaseHandler } from "../Helper/Database";
 import { LogHandler } from "../Helper/Log";
 import { Machine, OperationMode, Position } from "../models/Machine";
 
 export class MachineInstance implements Machine {
 
+    name: string;
     machineDetails: { model: string; serialNumber: number; sparDistance: number; };
     operation: { power: boolean; statusLED: { green: boolean; yellow: boolean; red: boolean; }; running: boolean; operationMode: OperationMode; };
     injectionUnit: { position: Position; };
@@ -10,13 +13,16 @@ export class MachineInstance implements Machine {
     lockingUnit: { locked: boolean; position: Position; };
     materialInfo: { temp: number; material: string; }
 
-    constructor() {
+    constructor(name?: string) {
+        this.name = name || "";
         this.machineDetails = { model: "Allrounder", serialNumber: 123456, sparDistance: 500 };
         this.operation = { power: false, statusLED: { green: false, yellow: false, red: false, }, running: false, operationMode: OperationMode.semiAutomatic };
         this.injectionUnit = { position: { max: 500, min: 0, x: 500 } };
         this.savetyDoor = { position: { max: 500, min: 0, x: 500 }, locked: false };
         this.lockingUnit = { locked: false, position: { max: 500, min: 0, x: 500 }, };
         this.materialInfo = { temp: 0, material: "pp" };
+
+        this.persistData();
     }
 
     powerOn() {
@@ -54,8 +60,7 @@ export class MachineInstance implements Machine {
 
     closeLockingUnit = (next: Function) => {
 
-        console.log("Workflow operation1");
-
+        
         if(this.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.injectMaterial); }, 1000);
     }
 
@@ -92,5 +97,11 @@ export class MachineInstance implements Machine {
         console.log("Workflow operation6");
 
         if(this.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.mountInjectionUnit);}, 1000);
+    }
+
+    persistData(){
+        setInterval(() => {
+            DatabaseHandler.getDbInstance().set(this.name, this);
+        }, 1000);
     }
 }

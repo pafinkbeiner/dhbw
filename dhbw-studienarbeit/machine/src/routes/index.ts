@@ -9,10 +9,7 @@ const router = express.Router();
 /* GET home page. */
 router.get("/", function(req, res, next) {
 
-  let machine: MachineInstance = new MachineInstance();
-  machine.operation.operationMode = OperationMode.automatic;
-  machine.startAutomatedWorkflow();
-
+  let machine: MachineInstance = new MachineInstance("Machine1");
 
   res.json(DatabaseHandler.getDbInstance().getAll())
 });
