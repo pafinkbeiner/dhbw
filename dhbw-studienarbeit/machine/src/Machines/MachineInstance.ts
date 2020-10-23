@@ -59,7 +59,7 @@ export class MachineInstance implements MachineTemplate{
     // Automated Workflow
 
     startAutomatedWorkflow() {
-        if (this.machineData.operation.operationMode == OperationMode.automatic) {
+        if (this.machineData.operation.operationMode == OperationMode.automatic && this.machineData.operation.power == true) {
             console.log("Workflow started!");
             this.closeLockingUnit(this.mountInjectionUnit);
         } else {
