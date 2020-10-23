@@ -40,11 +40,7 @@ export interface Machine{
         temp: Number,
         material: string;
         pressure: Force;
-    },
-    // Funktionen
-    powerOn: Function;
-    resetToDefault: Function;
-    setMachineMode: (data: OperationMode) => any;
+    }
 }
 
 export enum OperationMode{
