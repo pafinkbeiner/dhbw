@@ -1,26 +1,26 @@
 import { setInterval } from "timers";
 import { DatabaseHandler } from "../Helper/Database";
 import { LogHandler } from "../Helper/Log";
-import { Machine, OperationMode, Position } from "../models/Machine";
+import { Force, Level, Machine, OperationMode, Position } from "../models/Machine";
 
 export class MachineInstance implements Machine {
 
     name: string;
-    machineDetails: { model: string; serialNumber: number; sparDistance: number; };
+    machineDetails: { model: string; serialNumber: number; sparDistance: number; maxClosingForce: number; };
     operation: { power: boolean; statusLED: { green: boolean; yellow: boolean; red: boolean; }; running: boolean; operationMode: OperationMode; };
-    injectionUnit: { position: Position; };
+    injectionUnit: { position: Position; fillingLevel: Level; windowLocked: boolean;};
     savetyDoor: { position: Position; locked: boolean; };
-    lockingUnit: { locked: boolean; position: Position; };
-    materialInfo: { temp: number; material: string; }
+    lockingUnit: { locked: boolean; position: Position; closingForce: Force;};
+    materialInfo: { temp: number; material: string; pressure: Force;}
 
     constructor(name?: string) {
         this.name = name || "";
-        this.machineDetails = { model: "Allrounder", serialNumber: 123456, sparDistance: 500 };
+        this.machineDetails = { model: "Allrounder", serialNumber: 123456, sparDistance: 500 , maxClosingForce: 1000};
         this.operation = { power: false, statusLED: { green: false, yellow: false, red: false, }, running: false, operationMode: OperationMode.semiAutomatic };
-        this.injectionUnit = { position: { max: 500, min: 0, x: 500 } };
+        this.injectionUnit = { position: { max: 500, min: 0, x: 500 }, fillingLevel: { level: 0, minLevel: 0, maxLevel: 100 }, windowLocked: true};
         this.savetyDoor = { position: { max: 500, min: 0, x: 500 }, locked: false };
-        this.lockingUnit = { locked: false, position: { max: 500, min: 0, x: 500 }, };
-        this.materialInfo = { temp: 0, material: "pp" };
+        this.lockingUnit = { locked: false, position: { max: 500, min: 0, x: 500 }, closingForce: {force: 0, maxForce: 1000, minForce: 0}};
+        this.materialInfo = { temp: 0, material: "pp" , pressure: {force: 0, maxForce: 1000, minForce: 0}};
 
         this.persistData();
     }
@@ -31,12 +31,12 @@ export class MachineInstance implements Machine {
     };
 
     resetToDefault() {
-        this.machineDetails = { model: "Allrounder", serialNumber: 123456, sparDistance: 500 };
+        this.machineDetails = { model: "Allrounder", serialNumber: 123456, sparDistance: 500 , maxClosingForce: 1000};
         this.operation = { power: false, statusLED: { green: false, yellow: false, red: false, }, running: false, operationMode: OperationMode.semiAutomatic };
-        this.injectionUnit = { position: { max: 500, min: 0, x: 500 } };
+        this.injectionUnit = { position: { max: 500, min: 0, x: 500 }, fillingLevel: { level: 0, minLevel: 0, maxLevel: 100 }, windowLocked: true};
         this.savetyDoor = { position: { max: 500, min: 0, x: 500 }, locked: false };
-        this.lockingUnit = { locked: false, position: { max: 500, min: 0, x: 500 }, };
-        this.materialInfo = { temp: 0, material: "pp" };
+        this.lockingUnit = { locked: false, position: { max: 500, min: 0, x: 500 }, closingForce: {force: 0, maxForce: 1000, minForce: 0}};
+        this.materialInfo = { temp: 0, material: "pp" , pressure: {force: 0, maxForce: 1000, minForce: 0}};
     };
 
     setMachineMode(data: OperationMode) {

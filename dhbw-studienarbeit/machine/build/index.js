@@ -9,7 +9,6 @@ var express_1 = __importDefault(require("express"));
 var path_1 = __importDefault(require("path"));
 var index_1 = __importDefault(require("./routes/index"));
 var createError = require("http-errors");
-var debug = require("debug")("ejs:server");
 // initialize configuration
 dotenv_1.default.config();
 var app = express_1.default();
@@ -33,7 +32,7 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get("env") === "development" ? err : {};
     // render the error page
     res.status(err.status || 500);
-    res.render("error");
+    res.json({ error: err });
 });
 // start the express server
 app.listen(port, function () {

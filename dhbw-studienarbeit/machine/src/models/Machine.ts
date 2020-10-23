@@ -5,6 +5,7 @@ export interface Machine{
         model: string; 
         serialNumber: number;
         sparDistance: number;
+        maxClosingForce: number;
     },
     // Allgemein
     operation: {
@@ -20,7 +21,8 @@ export interface Machine{
     // Spritzeinheit
     injectionUnit: {
         position: Position;
-        
+        fillingLevel: Level;
+        windowLocked: boolean;
     },
     // Sicherheitstüre
     savetyDoor: {
@@ -31,11 +33,13 @@ export interface Machine{
     lockingUnit: {
         locked: boolean;
         position: Position
+        closingForce: Force;
     },
     // Material Informationen
     materialInfo :{
         temp: Number,
         material: string;
+        pressure: Force;
     },
     // Funktionen
     powerOn: Function;
@@ -53,6 +57,18 @@ export interface Position{
     x?: number;
     y?: number;
     z?: number;
-    min: number;
+    min: 0;
     max:number;
+}
+
+export interface Level{
+    level: number;
+    maxLevel: 100;
+    minLevel: 0;
+}
+
+export interface Force{
+    force: number;
+    maxForce: number;
+    minForce: 0;
 }

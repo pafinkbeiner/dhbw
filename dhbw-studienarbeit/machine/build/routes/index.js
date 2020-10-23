@@ -20,18 +20,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = __importStar(require("express"));
-var PubSub_1 = require("../Helper/PubSub");
+var Database_1 = require("../Helper/Database");
 var MachineInstance_1 = require("../Machines/MachineInstance");
 var router = express.Router();
 /* GET home page. */
 router.get("/", function (req, res, next) {
-    var machine1 = new MachineInstance_1.MachineInstance("machine1", "payload1");
-    var machine2 = new MachineInstance_1.MachineInstance("machine2", "payload2");
-    PubSub_1.PubSub.subscribe("Event1", function (str) { console.log(str); });
-    PubSub_1.PubSub.subscribe("Event2", function (machine2) { machine2.action(); });
-    console.log("Subscribed successfully");
-    PubSub_1.PubSub.emit("Event1", "Data1");
-    PubSub_1.PubSub.emit("Event2", "Data2");
-    res.send("Hey");
+    var machine = new MachineInstance_1.MachineInstance("Machine1");
+    res.json(Database_1.DatabaseHandler.getDbInstance().getAll());
 });
 exports.default = router;
