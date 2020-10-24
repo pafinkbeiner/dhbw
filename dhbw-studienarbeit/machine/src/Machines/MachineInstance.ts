@@ -59,11 +59,19 @@ export class MachineInstance implements MachineTemplate{
     // Automated Workflow
 
     startAutomatedWorkflow() {
-        if (this.machineData.operation.operationMode == OperationMode.automatic && this.machineData.operation.power == true) {
+        if (this.machineData.operation.operationMode == OperationMode.automatic && this.machineData.operation.power == true && this.machineData.savetyDoor.locked == true) {
             console.log("Workflow started!");
             this.closeLockingUnit(this.mountInjectionUnit);
         } else {
-            console.log("Worklow could not get started");
+            if(this.machineData.operation.operationMode != OperationMode.automatic){
+                console.log("Worklow could not get started, Operation mode is nota automatic");
+            }
+            if(this.machineData.operation.power != true){
+                console.log("Worklow could not get started, Power off");
+            }
+            if(this.machineData.savetyDoor.locked != true){
+                console.log("Worklow could not get started, Machine Door is not locked");
+            }
         }
     }
 
