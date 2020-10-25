@@ -3,10 +3,13 @@ import { DatabaseHandler } from "../Helper/Database";
 import { LogHandler } from "../Helper/Log";
 import { Machine, OperationMode, State } from "../models/Machine";
 import { MachineTemplate } from "../models/MachineTemplate";
+import { MessageTemplates } from "../models/Status";
 
 export class MachineInstance implements MachineTemplate{
 
     private _machineData: Machine;
+    accuracy: number;
+    timerIntervall: number;
     
     get machineData(){
         return this._machineData;
@@ -17,6 +20,9 @@ export class MachineInstance implements MachineTemplate{
     }
 
     constructor(name: string){
+        this.accuracy = 10;
+        this.timerIntervall = 1000;
+
         this._machineData = 
             {
                 name: name,
@@ -86,12 +92,23 @@ export class MachineInstance implements MachineTemplate{
 
         if(this.machineData.operation.power != true){
             this.machineData.state = State.none;
-            return;
+            return MessageTemplates.failureMessage.msg = "Machine is not powered on";
         }
 
+        // TODO add additional conditions
 
+        // Automate closing locking unit
+        this.machineData.lockingUnit.position.x = this.machineData.lockingUnit.position.min;
+
+        this.executeAction(this.timerIntervall, this.accuracy, () => {
+            this.machineData.lockingUnit.closingForce.force += this.machineData.lockingUnit.closingForce.maxForce / this.accuracy;
+            if(this.machineData.lockingUnit.position.x != undefined) this.machineData.lockingUnit.position.x += this.machineData.lockingUnit.position.max / this.accuracy;
+        });
+
+        // Savety Ruleset 
+        this.machineData.lockingUnit.closingForce.force = this.machineData.lockingUnit.closingForce.maxForce;
         
-        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.injectMaterial); }, 1000);
+        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.injectMaterial); }, this.timerIntervall);
     }
 
     mountInjectionUnit = (next: Function) => {
@@ -102,9 +119,18 @@ export class MachineInstance implements MachineTemplate{
             return;
         }
 
-        console.log("Workflow operation2");
+        // Automate mounting Injection Unit
+        this.machineData.injectionUnit.position.x = this.machineData.injectionUnit.position.min;
 
-        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.unmountInjectionUnit); }, 1000);
+        this.executeAction(this.timerIntervall, this.accuracy, () => {
+            this.machineData.injectionUnit.fillingLevel.level += this.machineData.injectionUnit.fillingLevel.maxLevel / this.accuracy;
+            if(this.machineData.injectionUnit.position.x != undefined) this.machineData.injectionUnit.position.x += this.machineData.injectionUnit.position.max / this.accuracy;
+        });
+
+        // Savety Ruleset
+        this.machineData.injectionUnit.fillingLevel.level = this.machineData.injectionUnit.fillingLevel.maxLevel;
+
+        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.unmountInjectionUnit); }, this.timerIntervall);
     }
 
     injectMaterial = (next: Function) => {
@@ -115,9 +141,16 @@ export class MachineInstance implements MachineTemplate{
             return;
         }
 
-        console.log("Workflow operation3");
+        // Automate mounting Injection Unit
 
-        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.wait);}, 1000);
+        this.executeAction(this.timerIntervall, this.accuracy, () => {
+            this.machineData.injectionUnit.fillingLevel.level -= this.machineData.injectionUnit.fillingLevel.maxLevel / this.accuracy;
+        });
+
+        //Savety Ruleset
+        this.machineData.injectionUnit.fillingLevel.level = this.machineData.injectionUnit.fillingLevel.minLevel;
+
+        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.wait);}, this.timerIntervall);
     }
 
     unmountInjectionUnit = (next: Function) => {
@@ -128,9 +161,19 @@ export class MachineInstance implements MachineTemplate{
             return;
         }
 
-        console.log("Workflow operation4");
+        // Automate mounting Injection Unit
+        this.machineData.injectionUnit.position.x = this.machineData.injectionUnit.position.max;
 
-        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.openLockingUnit);}, 1000);
+        this.executeAction(this.timerIntervall, this.accuracy, () => {
+            this.machineData.injectionUnit.fillingLevel.level -= this.machineData.injectionUnit.fillingLevel.maxLevel / this.accuracy;
+            if(this.machineData.injectionUnit.position.x != undefined) this.machineData.injectionUnit.position.x -= this.machineData.injectionUnit.position.max / this.accuracy;
+        });
+    
+        // Savety Ruleset
+        this.machineData.injectionUnit.fillingLevel.level = this.machineData.injectionUnit.fillingLevel.minLevel;
+        this.machineData.injectionUnit.position.x = this.machineData.injectionUnit.position.max;
+
+        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.openLockingUnit);}, this.timerIntervall);
     }
 
     wait = (next: Function) => {
@@ -141,9 +184,9 @@ export class MachineInstance implements MachineTemplate{
             return;
         }
 
-        console.log("Workflow operation5");
+        this.executeAction(this.timerIntervall, this.accuracy, () => {});
 
-        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.closeLockingUnit);}, 1000);
+        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.closeLockingUnit);}, this.timerIntervall);
     }
 
     openLockingUnit = (next: Function) => {
@@ -154,15 +197,38 @@ export class MachineInstance implements MachineTemplate{
             return;
         }
 
-        console.log("Workflow operation6");
+        // Automate closing locking unit
+        this.machineData.lockingUnit.position.x = this.machineData.lockingUnit.position.max;
 
-        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.mountInjectionUnit);}, 1000);
+        this.executeAction(this.timerIntervall, this.accuracy, () => {
+            this.machineData.lockingUnit.closingForce.force -= this.machineData.lockingUnit.closingForce.maxForce / this.accuracy;
+            if(this.machineData.lockingUnit.position.x != undefined) this.machineData.lockingUnit.position.x -= this.machineData.lockingUnit.position.max / this.accuracy;
+        });
+    
+        // Savety Ruleset 
+        this.machineData.lockingUnit.closingForce.force = this.machineData.lockingUnit.closingForce.minForce;
+        this.machineData.lockingUnit.position.x = this.machineData.lockingUnit.position.min;
+
+        if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.mountInjectionUnit);}, this.timerIntervall);
     }
 
     persistData(){
         setInterval(() => {
             DatabaseHandler.getDbInstance().set(this.machineData.name, this);
         }, 1000);
+    }
+
+    executeAction = (timerIntervall: number, accuracy: number, action: (...args: any[]) => void ) => {
+
+        var steps: number = Math.round(100 / accuracy); 
+
+        for(let i = 0; i < steps; i++){
+
+            action();
+
+            setTimeout(() => {}, timerIntervall / accuracy);
+
+        }
     }
 
 }

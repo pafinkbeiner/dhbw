@@ -8,11 +8,15 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
-
-  let machine1: MachineInstance = new MachineInstance("Machine1");
-  let machine2: MachineInstance = new MachineInstance("Machine2");
-
   res.json(DatabaseHandler.getDbInstance().getAll())
+});
+
+router.get("/new/:id", function(req, res, next){
+  let machine: MachineInstance = new MachineInstance(req.params.id || "Machine");
+  machine.machineData.savetyDoor.locked = true;
+  machine.powerOn();
+  machine.setMachineMode(OperationMode.automatic);
+  res.send(machine.startAutomatedWorkflow());
 });
 
 export default router;

@@ -4,6 +4,10 @@ export interface MachineTemplate{
 
     // Data
     machineData: Machine;
+    // Should be a number between 0-100
+    accuracy: number;
+    // Intervall time for Machine actions
+    timerIntervall: number;
 
     // Funktionen
     powerOn: Function;
