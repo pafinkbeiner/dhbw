@@ -11,13 +11,13 @@ router.get("/", function(req, res, next) {
   res.json(DatabaseHandler.getDbInstance().getAll())
 });
 
-router.get("/new/:id", function(req, res, next){
-  let machine: MachineInstance = new MachineInstance(req.params.id || "Machine");
-  machine.machineData.savetyDoor.locked = true;
-  machine.powerOn();
-  machine.setMachineMode(OperationMode.automatic);
-  res.send(machine.startAutomatedWorkflow());
-});
+// router.get("/new/:id", function(req, res, next){
+//   let machine: MachineInstance = new MachineInstance(req.params.id || "Machine");
+//   machine.machineData.savetyDoor.locked = true;
+//   machine.powerOn();
+//   machine.setMachineMode(OperationMode.automatic);
+//   res.send(machine.startAutomatedWorkflow());
+// });
 
 router.get("/info", (req, res, next) => {
   res.json([
@@ -35,6 +35,11 @@ router.get("/info", (req, res, next) => {
       route: "/logs",
       name: "Log File Route",
       function: "Return the whole collection of log files."
+    },
+    {
+      route: "/machines",
+      name: "Machine Route",
+      function: "Make Requests to the Machines."
     }
   ]);
 });

@@ -2,6 +2,7 @@ import { Machine, OperationMode } from "./Machine";
 
 export interface MachineTemplate{
 
+    id: string;
     // Data
     machineData: Machine;
     // Should be a number between 0-100

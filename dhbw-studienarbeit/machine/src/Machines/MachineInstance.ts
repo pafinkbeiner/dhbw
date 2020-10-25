@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import { getHeapStatistics } from "v8";
 import { DatabaseHandler } from "../Helper/Database";
 import { LogHandler } from "../Helper/Log";
@@ -7,6 +8,7 @@ import { MessageTemplates } from "../models/Status";
 
 export class MachineInstance implements MachineTemplate{
 
+    id: string;
     private _machineData: Machine;
     accuracy: number;
     timerIntervall: number;
@@ -22,6 +24,7 @@ export class MachineInstance implements MachineTemplate{
     constructor(name: string){
         this.accuracy = 10;
         this.timerIntervall = 1000;
+        this.id = v4(); 
 
         this._machineData = 
             {
@@ -36,7 +39,7 @@ export class MachineInstance implements MachineTemplate{
             };
 
         // Persisting Data initially    
-        DatabaseHandler.getDbInstance().set(this.machineData.name, this)
+        DatabaseHandler.getDbInstance().set(this.id, this)
         this.persistData();
     }
 
@@ -214,7 +217,7 @@ export class MachineInstance implements MachineTemplate{
 
     persistData(){
         setInterval(() => {
-            DatabaseHandler.getDbInstance().set(this.machineData.name, this);
+            DatabaseHandler.getDbInstance().update(this.id, this);
         }, 1000);
     }
 
