@@ -1,5 +1,6 @@
 export interface Machine{
     name: string;
+    state: State;
     // Maschinen Details
     machineDetails: {
         model: string; 
@@ -47,6 +48,16 @@ export enum OperationMode{
     automatic,
     semiAutomatic,
     stopped
+}
+
+export enum State{
+    none, 
+    closeLockingUnit,
+    mountInjectionUnit,
+    injectMaterial,
+    unmountInjectionUnit,
+    wait, 
+    openLockingUnit
 }
 
 export interface Position{

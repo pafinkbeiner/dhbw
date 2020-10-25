@@ -9,7 +9,8 @@ const router = express.Router();
 /* GET home page. */
 router.get("/", function(req, res, next) {
 
-  let machine: MachineInstance = new MachineInstance("Machine1");
+  let machine1: MachineInstance = new MachineInstance("Machine1");
+  let machine2: MachineInstance = new MachineInstance("Machine2");
 
   res.json(DatabaseHandler.getDbInstance().getAll())
 });

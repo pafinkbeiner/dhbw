@@ -1,6 +1,7 @@
+import { getHeapStatistics } from "v8";
 import { DatabaseHandler } from "../Helper/Database";
 import { LogHandler } from "../Helper/Log";
-import { Machine, OperationMode } from "../models/Machine";
+import { Machine, OperationMode, State } from "../models/Machine";
 import { MachineTemplate } from "../models/MachineTemplate";
 
 export class MachineInstance implements MachineTemplate{
@@ -19,6 +20,7 @@ export class MachineInstance implements MachineTemplate{
         this._machineData = 
             {
                 name: name,
+                state: State.none,
                 machineDetails : { model: "Allrounder", serialNumber: 123456, sparDistance: 500 , maxClosingForce: 1000},
                 operation : { power: false, statusLED: { green: false, yellow: false, red: false, }, running: false, operationMode: OperationMode.semiAutomatic },
                 injectionUnit : { position: { max: 500, min: 0, x: 500 }, fillingLevel: { level: 0, minLevel: 0, maxLevel: 100 }, windowLocked: true},
@@ -26,6 +28,9 @@ export class MachineInstance implements MachineTemplate{
                 lockingUnit : { locked: false, position: { max: 500, min: 0, x: 500 }, closingForce: {force: 0, maxForce: 1000, minForce: 0}},
                 materialInfo : { temp: 0, material: "pp" , pressure: {force: 0, maxForce: 1000, minForce: 0}},
             };
+
+        // Persisting Data initially    
+        DatabaseHandler.getDbInstance().set(this.machineData.name, this)
         this.persistData();
     }
 
@@ -40,6 +45,7 @@ export class MachineInstance implements MachineTemplate{
     };
 
     resetToDefault() {
+        this.machineData.state = State.none;
         this.machineData.machineDetails = { model: "Allrounder", serialNumber: 123456, sparDistance: 500 , maxClosingForce: 1000};
         this.machineData.operation = { power: false, statusLED: { green: false, yellow: false, red: false, }, running: false, operationMode: OperationMode.semiAutomatic };
         this.machineData.injectionUnit = { position: { max: 500, min: 0, x: 500 }, fillingLevel: { level: 0, minLevel: 0, maxLevel: 100 }, windowLocked: true};
@@ -76,12 +82,25 @@ export class MachineInstance implements MachineTemplate{
     }
 
     closeLockingUnit = (next: Function) => {
+        this.machineData.state = State.closeLockingUnit;
+
+        if(this.machineData.operation.power != true){
+            this.machineData.state = State.none;
+            return;
+        }
+
 
         
         if(this.machineData.operation.operationMode == OperationMode.automatic) setTimeout(() => { next(this.injectMaterial); }, 1000);
     }
 
     mountInjectionUnit = (next: Function) => {
+        this.machineData.state = State.mountInjectionUnit;
+
+        if(this.machineData.operation.power != true){
+            this.machineData.state = State.none;
+            return;
+        }
 
         console.log("Workflow operation2");
 
@@ -89,6 +108,12 @@ export class MachineInstance implements MachineTemplate{
     }
 
     injectMaterial = (next: Function) => {
+        this.machineData.state = State.injectMaterial;
+
+        if(this.machineData.operation.power != true){
+            this.machineData.state = State.none;
+            return;
+        }
 
         console.log("Workflow operation3");
 
@@ -96,6 +121,12 @@ export class MachineInstance implements MachineTemplate{
     }
 
     unmountInjectionUnit = (next: Function) => {
+        this.machineData.state = State.unmountInjectionUnit;
+
+        if(this.machineData.operation.power != true){
+            this.machineData.state = State.none;
+            return;
+        }
 
         console.log("Workflow operation4");
 
@@ -103,6 +134,12 @@ export class MachineInstance implements MachineTemplate{
     }
 
     wait = (next: Function) => {
+        this.machineData.state = State.wait;
+
+        if(this.machineData.operation.power != true){
+            this.machineData.state = State.none;
+            return;
+        }
 
         console.log("Workflow operation5");
 
@@ -110,6 +147,12 @@ export class MachineInstance implements MachineTemplate{
     }
 
     openLockingUnit = (next: Function) => {
+        this.machineData.state = State.openLockingUnit;
+
+        if(this.machineData.operation.power != true){
+            this.machineData.state = State.none;
+            return;
+        }
 
         console.log("Workflow operation6");
 
