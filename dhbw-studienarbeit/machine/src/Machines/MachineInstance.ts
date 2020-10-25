@@ -221,14 +221,14 @@ export class MachineInstance implements MachineTemplate{
     executeAction = (timerIntervall: number, accuracy: number, action: (...args: any[]) => void ) => {
 
         var steps: number = Math.round(100 / accuracy); 
+        var i = 0;
 
-        for(let i = 0; i < steps; i++){
-
+        var intId = setInterval(() => {
             action();
+            i++;
+            if(i >= steps) clearInterval(intId);
+        }, this.timerIntervall/this.accuracy);
 
-            setTimeout(() => {}, timerIntervall / accuracy);
-
-        }
     }
 
 }
