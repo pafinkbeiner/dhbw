@@ -29,4 +29,26 @@ router.get("/delete/:id", function(req, res, next){
     }
 });
 
+router.get("/operation/:machineId/:name", function(req, res, next){
+
+    const machine = machines.find(item => item.id == req.params.machineId);
+
+    switch (req.params.name) {
+        case "startAutomatedWorkflow":  machine?.startAutomatedWorkflow(); break;
+        case "powerOn":                 machine?.powerOn(); break;
+        case "resetToDefault":          machine?.resetToDefault(); break;
+        case "closeLockingUnit":        machine?.closeLockingUnit(machine?.mountInjectionUnit); break;
+        case "mountInjectionUnit":      machine?.mountInjectionUnit(machine?.injectMaterial); break;
+        case "injectMaterial":          machine?.injectMaterial(machine?.unmountInjectionUnit); break;
+        case "unmountInjectionUnit":    machine?.unmountInjectionUnit(machine?.wait); break;
+        case "wait":                    machine?.wait(machine?.openLockingUnit); break;
+        case "openLockingUnit":         machine?.openLockingUnit(machine?.closeLockingUnit); break;
+
+        default: res.json("Operation not found!"); break;
+    }
+
+    res.json("Operation: "+ req.params.name+ " started successfully.");
+
+});
+
 export default router;
