@@ -33,6 +33,8 @@ router.get("/operation/:machineId/:name", function(req, res, next){
 
     const machine = machines.find(item => item.id == req.params.machineId);
 
+    if(machine == undefined) res.json("Machine was not found.");
+
     switch (req.params.name) {
         case "startAutomatedWorkflow":  machine?.startAutomatedWorkflow(); break;
         case "powerOn":                 machine?.powerOn(); break;
