@@ -1,0 +1,9 @@
+.button {
+  margin:0.2rem;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
